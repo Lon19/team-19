@@ -6,7 +6,7 @@ from flask import g
 
 app = Flask(__name__)
 
-app["djustments_df"] = f.adjustments_dataframe()
+app["adjustments_df"] = f.adjustments_dataframe()
 app["mental_health_df"] = f.mental_health_dataframe()
 app["organizational_culture_df"] = f.organisational_culture_dataframe()
 app["work_self_confidence_df"] = f.work_self_confidence_dataframe()
