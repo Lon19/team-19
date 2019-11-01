@@ -77,4 +77,4 @@ tags
 # Persistent undo
 [._]*.un~
 
-./**/__pycache__
+/Backend/__pycache__
