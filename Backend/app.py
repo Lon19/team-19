@@ -39,5 +39,12 @@ def get_adjustments_sentiments():
     return 'ayyy lmao'
 
 
+@app.route('/mental', methods=['GET'])
+def get_adjustments_sentiments():
+    for row in adjustments_df.values:
+        frames.MentalHealth.CalculateDepression(row)
+    return 'ayyy lmao'
+
+
 if __name__ == '__main__':
     app.run(debug=True)
