@@ -1,8 +1,13 @@
 #!flask/bin/python
-import Backend.frames
+import frames
 from flask import Flask, jsonify
-
+from flask import g
 app = Flask(__name__)
+
+mental_health_df = frames.mental_health_dataframe()
+work_self_confidence_df = frames.work_self_confidence_dataframe()
+adjustments_df = frames.adjustments_dataframe()
+organisational_culture_df = frames.organisational_culture_dataframe()
 
 tasks = [
     {

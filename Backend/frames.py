@@ -15,7 +15,7 @@ def mental_health_dataframe():
 
 
 def adjustments_dataframe():
-    raw_data_file = 'data/adjustments-health.csv'
+    raw_data_file = 'data/adjustments.csv'
     return dataframe_from_csv(raw_data_file)
 
 
