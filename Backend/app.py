@@ -1,5 +1,6 @@
 #!flask/bin/python
 import frames
+from textblob import TextBlob
 from flask import Flask, jsonify
 app = Flask(__name__)
 
@@ -14,13 +15,13 @@ tasks = [
     {
         'id': 1,
         'title': u'Buy groceries',
-        'description': u'Milk, Cheese, Pizza, Fruit, Tylenol', 
+        'description': u'Milk, Cheese, Pizza, Fruit, Tylenol',
         'done': False
     },
     {
         'id': 2,
         'title': u'Learn Python',
-        'description': u'Need to find a good Python tutorial on the web', 
+        'description': u'Need to find a good Python tutorial on the web',
         'done': False
     }
 ]
@@ -29,6 +30,13 @@ tasks = [
 @app.route('/', methods=['GET'])
 def get_tasks():
     return mental_health_df.count()
+
+
+@app.route('/mental', methods=['GET'])
+def get_adjustments_sentiments():
+    for row in adjustments_df.values:
+        frames.MentalHealth.CalculateDepression(row)
+    return 'ayyy lmao'
 
 
 if __name__ == '__main__':
