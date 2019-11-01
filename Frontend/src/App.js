@@ -1,14 +1,16 @@
 import React from 'react';
-import './App.css';
+import './App.scss';
+import MenuContainer from './components/MenuContainer';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <text>Autistica</text>
-      </header>
-    </div>
-  );
+export default class App extends React.Component {
+  render() {
+    return (
+      <div className='App'>
+        <MenuContainer />
+      </div>
+    );
+  }
 }
 
-export default App;
+
+
