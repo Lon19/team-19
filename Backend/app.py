@@ -1,5 +1,5 @@
 #!flask/bin/python
-import Backend.frames
+import frames
 from flask import Flask, jsonify
 
 app = Flask(__name__)
