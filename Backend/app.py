@@ -13,12 +13,21 @@ app.frames = {
         "work_self_confidence_df": f.work_self_confidence_dataframe()
     }
 
-app.counter = 0
-
-@app.route('/', methods=['GET'])
+@app.route('adjustments/count', methods=['GET'])
 def get_tasks():
-    app.counter += 1
-    return jsonify(app.counter)
+    return jsonify(len(app.frames.adjustments_df))
+
+@app.route('mental-health/count', methods=['GET'])
+def get_tasks():
+    return jsonify(len(app.frames.mental_health_df))
+
+@app.route('organizational-culture/count', methods=['GET'])
+def get_tasks():
+    return jsonify(len(app.frames.organizational_culture_df))
+
+@app.route('work-self-confidence/count', methods=['GET'])
+def get_tasks():
+    return jsonify(len(app.frames.work_self_confidence_df))
 
 
 
