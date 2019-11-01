@@ -29,3 +29,44 @@ def work_self_confidence_dataframe():
     return dataframe_from_csv(raw_data_file)
 
 
+class AnswerMappings:
+    mental_health = {
+        'did not apply to me at all': 0,
+        'applied to me to some degree': 1,
+        'applied to me to a considerable degree, or a good part of the time': 2,
+        'applied to me a good part of the time': 2,
+        'applied to me to a considerable degree': 2,
+        'applied to me very much, or most of the time': 3,
+    }
+
+    organisational_culture = {
+        'Strongly disagree': 0,
+        'Somewhat disagree': 1,
+        'Somewhat agree': 2,
+        'Strongly agree': 3,
+    }
+
+
+class MentalHealth:
+    # Depression = (sum of questions 3, 5, 10, 16, 17, 21) x 2
+    def CalculateDepression(self, row):
+        # convert to lowercase for finding score
+        return 0
+
+    # Anxiety = (sum of questions 2, 4, 7, 9, 15, 19, 20) x 2
+    def CalculateAnxiety(self, row):
+        return 0
+
+    # Stress = (sum of questions 1, 6, 8, 11, 12, 14, 18) x 2
+    def CalculateStress(self, row):
+        return 0
+
+# Severity ratings
+# Severity  Depression  Anxiety   Stress
+# --------|-----------|----------|---------|
+# Normal    0-9         0-7       0-14
+# Mild      10-13       8-9       15-18
+# Moderate  14-20       10-14     19-25
+# Severity  21-27       15-19     26-33
+# Extremely 28+         20+       34+
+# ...Severe

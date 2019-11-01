@@ -11,9 +11,11 @@ app.frames = {"adjustments_df": f.adjustments_dataframe(),
               "organisational_culture_df": f.organisational_culture_dataframe(),
               "work_self_confidence_df": f.work_self_confidence_dataframe()}
 
-d = {'Strongly disagree': 0, 'Somewhat disagree': 1,
-     'Somewhat agree': 2, 'Strongly agree': 3}
-app.organisational_culture_df_quantitative = app.frames["organisational_culture_df"].applymap(lambda data: d[data] if data in d else data)
+app.organisational_culture_df_quantitative = app.frames["organisational_culture_df"].applymap(
+    lambda data: f.AnswerMappings.organisational_culture[data] if data in f.AnswerMappings.organisational_culture else data)
+
+app.mental_health_df_quantitative = app.frames["mental_health_df"].applymap(
+    lambda data: f.AnswerMappings.mental_health[str(data).lower()] if str(data).lower() in f.AnswerMappings.mental_health else data)
 
 
 @app.route('/adjustments/count', methods=['GET'])
