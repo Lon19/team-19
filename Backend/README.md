@@ -1,3 +1,7 @@
 #Backend
 
-`pip3 install -r requirements.txt'
+Install:
+`pip install -r requirements.txt`
+
+Run:
+`python app.py`
