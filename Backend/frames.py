@@ -47,12 +47,15 @@ class AnswerMappings:
     }
 
     work_self_confidence = {
-        'Not confident at all': 0,
-        'A little': 1,
-        'Moderate': 2,
-        'A lot': 3,
-        'Completely confident': 4,
+        'Not confident at all': 1,
+        'A little': 2,
+        'Moderate': 3,
+        'A lot': 4,
+        'Completely confident': 5,
     }
+
+
+
 
 
 class MentalHealth:
