@@ -1,8 +1,6 @@
 #!flask/bin/python
 import frames as f
 from flask import Flask, jsonify
-from flask import g
-
 
 app = Flask(__name__)
 
@@ -16,6 +14,9 @@ app.organisational_culture_df_quantitative = app.frames["organisational_culture_
 
 app.mental_health_df_quantitative = app.frames["mental_health_df"].applymap(
     lambda data: f.AnswerMappings.mental_health[str(data).lower()] if str(data).lower() in f.AnswerMappings.mental_health else data)
+
+app.work_self_confidence_df_quantitative = app.frames["organisational_culture_df"].applymap(
+    lambda data: f.AnswerMappings.work_self_confidence[data] if data in f.AnswerMappings.work_self_confidence else data)
 
 
 @app.route('/adjustments/count', methods=['GET'])

@@ -31,9 +31,9 @@ def work_self_confidence_dataframe():
 
 class AnswerMappings:
     mental_health = {
-        'did not apply to me at all': 0,
-        'applied to me to some degree': 1,
-        'applied to me to a considerable degree, or a good part of the time': 2,
+        'did not apply to me at all': 0,
+        'applied to me to some degree': 1,
+        'applied to me to a considerable degree, or a good part of the time': 2,
         'applied to me a good part of the time': 2,
         'applied to me to a considerable degree': 2,
         'applied to me very much, or most of the time': 3,
@@ -44,6 +44,14 @@ class AnswerMappings:
         'Somewhat disagree': 1,
         'Somewhat agree': 2,
         'Strongly agree': 3,
+    }
+
+    work_self_confidence = {
+        'Not confident at all': 0,
+        'A little': 1,
+        'Moderate': 2,
+        'A lot': 3,
+        'Completely confident': 4,
     }
 
 
