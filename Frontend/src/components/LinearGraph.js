@@ -15,7 +15,9 @@ class LinearGraph extends Component {
 
   componentDidMount() {
     fetch(
-      "http://127.0.0.1:5000/work-self-confidence/overview?username=67611589",
+      "http://127.0.0.1:5000/" +
+        this.props.questionaire +
+        "/overview?username=67611589",
       {
         mode: "cors"
       }
