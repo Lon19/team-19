@@ -21,18 +21,6 @@ Titles = {
   teamwork: "Teamwork",
   work_politics: "Work Politics"
 };
-const characterData = [
-  {
-    date: "18th August 2019 9:16 am",
-    learning: 2.75,
-    pressure: 2.5,
-    problem_solving: 2.5,
-    role_expectations: 2.5,
-    sensitivity: 3.0,
-    teamwork: 1.75,
-    work_politics: 1.5
-  }
-];
 
 class RadialGraphWorkSelfConfidence extends Component {
   constructor(props) {
@@ -136,6 +124,7 @@ class RadialGraphWorkSelfConfidence extends Component {
                       target: "axisLabel",
                       mutation: () => {
                         console.log(key + " has been chosen");
+                        this.props.changeSelection(key);
                         return null;
                       }
                     })

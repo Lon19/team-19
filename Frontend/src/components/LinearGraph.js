@@ -1,12 +1,5 @@
 import React, { Component } from "react";
-import {
-  VictoryChart,
-  VictoryScatter,
-  VictoryLine,
-  VictoryPolarAxis,
-  VictoryGroup,
-  VictoryArea
-} from "victory";
+import { VictoryChart, VictoryLine, VictoryAxis } from "victory";
 
 const myBlue = "#75b2ff";
 
@@ -14,15 +7,17 @@ class LinearGraph extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      data: [],
+      wholeData: [],
       ready: false,
-      selection: "pressure"
+      selection: props.selection
     };
   }
 
   componentDidMount() {
     fetch(
-      "http://127.0.0.1:5000/work-self-confidence/overview?username=67611589",
+      "http://127.0.0.1:5000/" +
+        this.props.questionaire +
+        "/overview?username=67611589",
       {
         mode: "cors"
       }
@@ -32,9 +27,7 @@ class LinearGraph extends Component {
       })
       .then(data => {
         this.setState({
-          data: data.map(a => {
-            return { x: new Date(a.date), y: a[this.props.selection] };
-          }),
+          wholeData: data,
           ready: true
         });
       });
@@ -44,6 +37,13 @@ class LinearGraph extends Component {
     if (!this.state.ready) {
       return null;
     }
+
+    var currentData = this.state.wholeData.map(a => {
+      console.log(this.props.selection);
+      console.log(a);
+      return { x: new Date(a.date), y: a[this.props.selection] };
+    });
+
     return (
       <VictoryChart scale={{ x: "time" }}>
         <VictoryLine
@@ -51,7 +51,22 @@ class LinearGraph extends Component {
             data: { stroke: "#c43a31" },
             parent: { border: "1px solid #ccc" }
           }}
-          data={this.state.data}
+          data={currentData}
+          maxDomain={{ y: 4 }}
+          minDomain={{ y: 0 }}
+        />
+        <VictoryAxis
+          dependentAxis
+          width={400}
+          height={400}
+          domain={[0, 4]}
+          standalone={false}
+        />
+        <VictoryAxis
+          independentAxis
+          width={400}
+          height={400}
+          standalone={false}
         />
       </VictoryChart>
     );
