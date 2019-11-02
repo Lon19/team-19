@@ -136,6 +136,7 @@ class RadialGraphWorkSelfConfidence extends Component {
                       target: "axisLabel",
                       mutation: () => {
                         console.log(key + " has been chosen");
+                        this.props.changeSelection(key);
                         return null;
                       }
                     })
