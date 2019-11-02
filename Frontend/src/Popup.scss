@@ -21,14 +21,15 @@
 //}
 
 .popup {
-  position: fixed;
-  width: 500px;
-  height: 500px;
-  top: 50px;
-  left: 430px;
+  position: center;
+  position: absolute;
+  width: 90%;
+  height: 90%;
+  top: 20px;
+  left: 20px;
   //right: 10px;
   //bottom: 10px;
-  background: white;
+  background: #fffdeb;
   overflow-x: hidden;
 }
 

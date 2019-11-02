@@ -55,7 +55,6 @@ class RadialGraphWorkSelfConfidence extends Component {
                 }
             )
             .then(data => {
-                console.log(data);
                 this.setState({data: this.processData(data.map(a => {
                         delete a.date;
                         return a;

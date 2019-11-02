@@ -1,11 +1,11 @@
 @import url('https://fonts.googleapis.com/css?family=Lato&display=swap');
 $bg: #34495e;
 $primarycolor: #75b2ff;
-$white: #ecf0f1;
+$white: #fffdeb;
 $font: 'Rubik';
 
 html, body {
-  background: white;
+  background: #fffdeb;
   min-height: 100vh;
   font-family: 'Lato', sans-serif;
   font-weight: bolder;
@@ -15,6 +15,7 @@ html, body {
 
 .App {
   //Change if more items added
+  background: $white;
   display: flex;
 }
 
@@ -41,6 +42,7 @@ html, body {
 }
 
 .menu-container {
+  background: $white;
   box-shadow: 0 0px 50px hsla(0, 0, 0, 0);
   position: relative;
   transform: translate(0);

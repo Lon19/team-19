@@ -133,6 +133,8 @@ def get_mental_health_summary(rows, id):
     for row in rows[1:]:
         if row[headers.index('Username')] == id:
             d = dict()
+            # d["date"] = row[headers.index('Date')].replace('th ',' ').replace('st ',' ').replace('nd ',' ').replace('Augu','August')
+            d["date"] = row[2]
             depression = ((fix_broken_data(row[5]) + fix_broken_data(row[7]) + fix_broken_data(row[12]) +
                            fix_broken_data(row[18]) + fix_broken_data(row[19]) + fix_broken_data(row[23])) * 2)
 
@@ -149,7 +151,6 @@ def get_mental_health_summary(rows, id):
             d["depression_severity"] = get_severity('depression',depression)
             d["anxiety_severity"]    = get_severity('anxiety'   ,anxiety)
             d["stress_severity"]     = get_severity('stress'    ,stress)
-            d['date'] = row[headers.index('Date')]
             summary.append(d)
     return summary
 
@@ -188,6 +189,7 @@ def get_severity(attribute, value):
             return 'Mild' 
         if(value >= 0):
             return 'Normal' 
+
     if (attribute  == 'stress'):
         if(value >= 34):
             return 'Extremely Severe'
@@ -199,7 +201,8 @@ def get_severity(attribute, value):
             return 'Mild' 
         if(value >= 0):
             return 'Normal'  
-    return ('Unknown attribute: ' + str(attribute))   
+
+    return ('Unknown attribute: ' + str(attribute))
 
 def get_work_self_confidence_summary(rows, id):
     summary = []
@@ -240,7 +243,7 @@ def get_admin_mental_health_summary(rows):
         d = dict()
 
         # get week start for grouping
-        date = row[25].replace('th ',' ').replace('st ',' ').replace('nd ',' ').replace('Augu','August')
+        date = row[2].replace('th ',' ').replace('st ',' ').replace('nd ',' ').replace('Augu','August')
         dt = datetime.strptime(date, '%d %B %Y %I:%M %p')
         week_start = dt - timedelta(days=dt.weekday())
         date = week_start.strftime('%d %B %Y %I:%M %p')

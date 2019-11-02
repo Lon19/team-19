@@ -35,4 +35,3 @@ const PrivateRoute = ({ component, logIn, state, ...options }) => {
 
   return <Route {...options} render={(props) => <FinalComponent logIn={logIn}/>} />;
 }
-}

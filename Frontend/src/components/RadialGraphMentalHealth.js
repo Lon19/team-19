@@ -35,7 +35,7 @@ class RadialGraphMentalHealth extends Component {
 
     componentDidMount() {
         //Other endpoint
-        fetch("http://127.0.0.1:5000/work-self-confidence/overview?username=67611589", {
+        fetch("http://127.0.0.1:5000/mental-health/overview?username=11111111", {
             mode: 'cors'
         })
             .then(response => {
@@ -45,8 +45,7 @@ class RadialGraphMentalHealth extends Component {
             .then(data => {
                 console.log(data);
                 this.setState({data: this.processData(data.map(a => {
-                        delete a.date;
-                        return a;
+                        return {depression: a.depression, anxiety: a.anxiety, stress: a.stress}
                     })), ready: true, withDateData: data });
             });
     }
