@@ -1,3 +1,5 @@
+node_modules/
+
 # VSCode
 .vscode/*
 !.vscode/settings.json
@@ -78,3 +80,7 @@ tags
 [._]*.un~
 
 /Backend/__pycache__
+
+.idea
+package-lock.json
+/**/package-lock.json
