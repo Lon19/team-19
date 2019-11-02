@@ -134,19 +134,63 @@ def get_mental_health_summary(rows, id):
         if row[2] == id:
             d = dict()
             d["date"] = row[25]
-            d["depression"] = ((fix_broken_data(row[5]) + fix_broken_data(row[7]) + fix_broken_data(row[12]) +
+            depression = ((fix_broken_data(row[5]) + fix_broken_data(row[7]) + fix_broken_data(row[12]) +
                            fix_broken_data(row[18]) + fix_broken_data(row[19]) + fix_broken_data(row[23])) * 2)
 
-            d["anxiety"] = ((fix_broken_data(row[4]) + fix_broken_data(row[6]) + fix_broken_data(row[9]) +
+            anxiety = ((fix_broken_data(row[4]) + fix_broken_data(row[6]) + fix_broken_data(row[9]) +
                            fix_broken_data(row[11]) + fix_broken_data(row[17]) + fix_broken_data(row[21]) +
                              fix_broken_data(row[22])) * 2)
 
-            d["stress"] = ((fix_broken_data(row[3]) + fix_broken_data(row[8]) + fix_broken_data(row[10]) +
+            stress  = ((fix_broken_data(row[3]) + fix_broken_data(row[8]) + fix_broken_data(row[10]) +
                            fix_broken_data(row[13]) + fix_broken_data(row[14]) + fix_broken_data(row[16]) +
                              fix_broken_data(row[20])) * 2)
+            d["depression"] = depression
+            d["anxiety"]    = anxiety
+            d["stress"]     = stress
+            d["depression_severity"] = get_severity('depression',depression)
+            d["anxiety_severity"]    = get_severity('anxiety'   ,anxiety)
+            d["stress_severity"]     = get_severity('stress'    ,stress)
             summary.append(d)
     return summary
 
+
+def get_severity(attribute, value):
+    if (value < 0):
+        return ('Invalid value: ' + str(value))
+    if (attribute  == 'depression'):
+        if(value >= 28):
+            return 'Extremely Severe'
+        if(value >= 21):
+            return 'Severe'  
+        if(value >= 14):
+            return 'Moderate' 
+        if(value >= 10):
+            return 'Mild' 
+        if(value >= 0):
+            return 'Normal'   
+    if (attribute  == 'anxiety'):
+        if(value >= 20):
+            return 'Extremely Severe'
+        if(value >= 15):
+            return 'Severe'  
+        if(value >= 10):
+            return 'Moderate' 
+        if(value >= 8):
+            return 'Mild' 
+        if(value >= 0):
+            return 'Normal' 
+    if (attribute  == 'stress'):
+        if(value >= 34):
+            return 'Extremely Severe'
+        if(value >= 26):
+            return 'Severe'  
+        if(value >= 19):
+            return 'Moderate' 
+        if(value >= 15):
+            return 'Mild' 
+        if(value >= 0):
+            return 'Normal'  
+    return ('Unknown attribute: ' + str(attribute))   
 
 def get_work_self_confidence_summary(rows, id):
     summary = []
