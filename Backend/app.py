@@ -1,6 +1,7 @@
 #!flask/bin/python
 import frames as f
 from flask import Flask, jsonify, request
+from flask_cors import CORS
 
 app = Flask(__name__)
 
@@ -18,6 +19,7 @@ app.mental_health_df_quantitative = list(map(lambda row: list(map(
 app.work_self_confidence_df_quantitative = list(map(lambda row: list(map(
     lambda data: f.AnswerMappings.work_self_confidence[data] if data in f.AnswerMappings.work_self_confidence else data, row)), app.frames["work_self_confidence_df"]))
 
+CORS(app)
 
 @app.route('/adjustments/count', methods=['GET'])
 def get_adjustments_count():
