@@ -133,7 +133,6 @@ def get_mental_health_summary(rows, id):
     for row in rows[1:]:
         if row[headers.index('Username')] == id:
             d = dict()
-            d['date'] = row[headers.index('Date')].replace('th ',' ').replace('st ',' ').replace('nd ',' ').replace('Augu','August')
             depression = ((fix_broken_data(row[5]) + fix_broken_data(row[7]) + fix_broken_data(row[12]) +
                            fix_broken_data(row[18]) + fix_broken_data(row[19]) + fix_broken_data(row[23])) * 2)
 
@@ -150,6 +149,7 @@ def get_mental_health_summary(rows, id):
             d["depression_severity"] = get_severity('depression',depression)
             d["anxiety_severity"]    = get_severity('anxiety'   ,anxiety)
             d["stress_severity"]     = get_severity('stress'    ,stress)
+            d['date'] = row[headers.index('Date')]
             summary.append(d)
     return summary
 
