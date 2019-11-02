@@ -20,7 +20,7 @@ export default class App extends React.Component {
 
   render() {
     return (
-      <div className='App'>
+      <div className="App">
         <Switch>
           <PrivateRoute path="/" component={MenuContainer} state={this.state.loggedIn} logIn={this.logIn} />
         </Switch>
@@ -34,5 +34,4 @@ const PrivateRoute = ({ component, logIn, state, ...options }) => {
   const FinalComponent = state ? component : Login;
 
   return <Route {...options} render={(props) => <FinalComponent logIn={logIn}/>} />;
-}
 }
