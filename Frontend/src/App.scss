@@ -1,16 +1,16 @@
-@import url('https://fonts.googleapis.com/css?family=Rubik:300');
-$bg: #fffdeb;
-$primarycolor: #f39c12;
+@import url('https://fonts.googleapis.com/css?family=Lato&display=swap');
+$bg: #34495e;
+$primarycolor: #75b2ff;
 $white: #ecf0f1;
 $font: 'Rubik';
 
 html, body {
-  //background: radial-gradient($bg 0, darken($bg, 15%) 100%);
-  background: $bg;
+  background: white;
   min-height: 100vh;
-  font-family: $font, sans-serif;
-  padding: 0;
-  margin: 0;
+  font-family: 'Lato', sans-serif;
+  font-weight: bolder;
+  padding: 0px;
+  margin: 0px;
 }
 
 .App {
@@ -25,7 +25,7 @@ html, body {
   padding: 50px 0;
   text-align: center;
   width: 100%;
-  
+
   a,
   a:hover,
   a:active,
@@ -34,24 +34,26 @@ html, body {
     color: darken($white, 15%);
     text-decoration: none;
   }
-  
+
   a:hover {
     border-bottom: 1px solid lighten($white, 15%);
   }
 }
 
 .menu-container {
-  //box-shadow: 0 0px 50px hsla(0, 0, 0, 0.7);
+  box-shadow: 0 0px 50px hsla(0, 0, 0, 0);
   position: relative;
   transform: translate(0);
-  margin: 18% auto 18% auto;
-  width: 90%;
+  //***  margin: 18% auto 18% auto;
+  margin: auto auto auto auto;
+  width: 95%;
   height: 100%;
 }
 
 .menu-item,
 .menu-item--active {
-  height: 70px;
+  display: flex;
+  height: (100vh)/3;
   width: 100%;
 }
 
@@ -60,15 +62,15 @@ html, body {
   color: $white;
   cursor: pointer;
   display: flex;
-  font-size: 15px;
+  font-size: 30px;
   justify-content: center;
-  letter-spacing: 4px;
+  letter-spacing: 3px;
   text-align: center;
-  
+
   &.active {
-    //box-shadow: 0 2px 3px hsla(0, 0, 0, 0.7);
+    box-shadow: 0 2px 3px hsla(0, 0, 0, 0.7);
   }
- 
+
   &:nth-of-type(1) {
     background: $primarycolor;
   }
@@ -76,20 +78,20 @@ html, body {
     background: darken($primarycolor, 5%);
   }
   &:nth-of-type(3) {
-    background: darken($primarycolor, 10%);
-  }
-  &:nth-of-type(4) {
     background: darken($primarycolor, 15%);
   }
+  &:nth-of-type(4) {
+    background: darken($primarycolor, 25%);
+  }
   &:nth-of-type(5) {
-    background: darken($primarycolor, 20%);
+    background: darken($primarycolor, 35%);
   }
 }
 
 .menu-item--active {
   background: $primarycolor;
   border-radius: 2px !important;
-  //box-shadow: 0 0px 50px hsla(0, 0, 0, 0.5);
+  box-shadow: 0 0px 50px hsla(0, 0, 0, 0.5);
   left: 50%;
   padding: 0 7px;
   position: absolute;

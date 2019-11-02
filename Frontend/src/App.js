@@ -50,9 +50,4 @@ const PrivateRoute = ({ component, ...options, state }) => {
 
   return <Route {...options} component={finalComponent} />;
 }
-
-
-
-
-
-
+}
