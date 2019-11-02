@@ -14,7 +14,7 @@ export default class App extends React.Component {
         <MenuContainer />
         {/*<RadialGraphMentalHealth/>*/}
         <RadialGraphWorkSelfConfidence/>
-        {/*<LinearGraph/>*/}
+        <LinearGraph/>
       </div>
     );
   }

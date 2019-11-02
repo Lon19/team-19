@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { VictoryChart, VictoryTheme, VictoryStack, VictoryPolarAxis, VictoryGroup, VictoryArea } from 'victory';
+import { VictoryChart, VictoryScatter, VictoryLine, VictoryPolarAxis, VictoryGroup, VictoryArea } from 'victory';
 
 const myBlue = "#75b2ff";
 
@@ -24,16 +24,15 @@ class LinearGraph extends Component {
                 }
             )
             .then(data => {
-                this.setState({data: this.processData(data.map(a => {
-                        console.log({date: a.date, item: a[this.state.selection]});
-                        return {date: a.date, item: a[this.state.selection]};
-                    })), ready: true });
+                this.setState({data: data.map(a => {
+                        return {date: new Date(a.date), item: a[this.state.selection]};
+                    }), ready: true });
             });
     }
      processData (data)  {
         const makeDataArray = (d) => {
             return Object.keys(d).map((key) => {
-                return { x: key, y: d.item };
+                return { x: new Date(d.date), y: d.item };
             });
         };
         return data.map((datum) => makeDataArray(datum));
@@ -43,24 +42,18 @@ class LinearGraph extends Component {
          if (!this.state.ready) {
              return null;
          }
+         console.log(this.state.data);
         return (
             <VictoryChart
-                theme={VictoryTheme.material}
-                animate={{ duration: 1000 }}
+                scale={{ x: "time" }}
             >
-                <VictoryStack
-                    colorScale={"blue"}
-                >
-                    {this.state.data.map((data, i) => {
-                        return (
-                            <VictoryArea
-                                key={i}
-                                data={data}
-                                interpolation={"basis"}
-                            />
-                        );
-                    })}
-                </VictoryStack>
+                <VictoryLine
+                    style={{
+                        data: { stroke: "#c43a31" },
+                        parent: { border: "1px solid #ccc"}
+                    }}
+                    data={this.state.date}
+                />
             </VictoryChart>
         );
     }
