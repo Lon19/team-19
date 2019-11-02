@@ -1,6 +1,10 @@
+
 .Main {
+    min-width: 100vh;
     display: flex;
-    position: relative;
+    position: absolute;
     align-items: center;
     justify-content: center;
+    margin: 20;
+    text-align: center;
 }
