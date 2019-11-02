@@ -44,8 +44,7 @@ class RadialGraphMentalHealth extends Component {
         this.setState({
           data: this.processData(
             data.map(a => {
-              delete a.date;
-              return a;
+              return {depression: a.depression, anxiety: a.anxiety, stress: a.stress};
             })
           ),
           ready: true,

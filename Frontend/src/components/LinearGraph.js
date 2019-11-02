@@ -40,15 +40,17 @@ class LinearGraph extends Component {
 
     var currentData = this.state.wholeData.map(a => {
       console.log(this.props.selection);
-      console.log(a);
+      console.log({ x: new Date(a.date), y: a[this.props.selection] });
       return { x: new Date(a.date), y: a[this.props.selection] };
     });
 
     return (
-      <VictoryChart scale={{ x: "time" }}>
+      <VictoryChart scale={{ x: "time" }}
+                    animate={{ duration: 500 }}
+      >
         <VictoryLine
           style={{
-            data: { stroke: "#c43a31" },
+            data: { stroke: "#75b2ff" },
             parent: { border: "1px solid #ccc" }
           }}
           data={currentData}
