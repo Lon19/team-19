@@ -99,6 +99,34 @@ def getMentalHealthSummary(rows, id):
         #print("" + str(key) + " : " + str(depression))
     return 0
 
+
+def get_work_self_confidence_summary(rows, id):
+    summary = []
+
+    for row in rows:
+        if row[2] == id:
+            learning = (int(row[7]) + int(row[15]) + int(row[25]) + int(row[28]))/4
+            problem_solving = (int(row[12]) + int(row[17]) + int(row[18]) + int(row[19]) + int(row[24]) + int(row[26]))/6
+            pressure = (int(row[8]) + int(row[13]) + int(row[22]) + int(row[30]))/4
+            role_expectations = (int(row[3]) + int(row[5]) + int(row[11]) + int(row[23]))/4
+            teamwork = (int(row[4]) + int(row[10]) + int(row[16]) + int(row[27]))/4
+            sensitivity = (int(row[10]) + int(row[29]) + int(row[31]) + int(row[32]))/4
+            work_politics = (int(row[6]) + int(row[9]) + int(row[14]) + int(row[21]))/4
+
+            summary.append({
+                "date": row[34],
+                "learning": learning,
+                "problem_solving": problem_solving,
+                "pressure": pressure,
+                "role_expectations": role_expectations,
+                "teamwork": teamwork,
+                "sensitivity": sensitivity,
+                "work_politics": work_politics
+            })
+    
+    return summary
+
+
 # Severity ratings
 # Severity  Depression  Anxiety   Stress
 # --------|-----------|----------|---------|

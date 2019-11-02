@@ -36,6 +36,13 @@ def get_mental_health_overview():
         app.mental_health_df_quantitative, username)
     return jsonify(depression)
 
+@app.route('/work-self-confidence/overview', methods=['GET'])
+def get_work_self_confidence_overview():
+    username = request.args.get('username')
+    summary = f.get_work_self_confidence_summary(
+        app.work_self_confidence_df_quantitative, username)
+    return jsonify(summary)
+
 
 @app.route('/organisational-culture/count', methods=['GET'])
 def get_organizational_culture_count():
