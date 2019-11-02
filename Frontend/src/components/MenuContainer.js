@@ -66,5 +66,6 @@ function MenuItem(props) {
       >
         {props.item.text.toUpperCase()}
       </div>
+
   );
 }
