@@ -23,6 +23,12 @@ app.work_self_confidence_df_quantitative = list(map(lambda row: list(map(
 def get_adjustments_count():
     return jsonify(len(app.frames["adjustments_df"]))
 
+@app.route('/adjustments/summary', methods=['GET'])
+def get_adjustments_sentiment_summary():
+    username = request.args.get('username')
+    summary = f.get_adjustments_sentiments_summary(
+        app.frames["adjustments_df"], username)
+    return jsonify(summary)
 
 @app.route('/mental-health/count', methods=['GET'])
 def get_mental_health_count():

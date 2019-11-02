@@ -1,4 +1,5 @@
 import csv
+from textblob import TextBlob
 
 def dataframe_from_csv(raw_data_file):
     infile = open(raw_data_file, 'r')
@@ -81,12 +82,45 @@ mental_health_questions = {
     21: "I felt that life was meaningless",
 }
 
+def get_adjustments_sentiments_summary(rows, id):
+    summary = []
+    headers = rows[0]
+    for row in rows:
+        if row[headers.index('Username')] == id:
+            timestamp = row[headers.index('Date')]
+            questions = []
+            for i in range(2, len(row)):
+                question = headers[i]
+                response = row[i]
+
+                # polarity score is a float within the range [-1.0, 1.0]
+                # negative value => negative text, positive value i=> text is positive.
+
+                # subjectivity is a float within the range [0.0, 1.0] where
+                # 0.0 is very objective and 1.0 is very subjective.
+
+                response_blob = TextBlob(response)
+                sentiment = {
+                    'polarity'      : response_blob.sentiment.polarity,
+                    'subjectivity'  : response_blob.sentiment.subjectivity,
+                    'word_count'    : len(response_blob.words),
+                }
+
+                questions.append({
+                    'question'  :question,
+                    'sentiment' :sentiment,
+                })
+            summary.append({
+                'date'      :  timestamp,
+                'questions' :  questions,
+            })
+    return summary
+
 # Depression = (sum of questions 3, 5, 10, 16, 17, 21) x 2
 # Anxiety = (sum of questions 2, 4, 7, 9, 15, 19, 20) x 2
 # Stress = (sum of questions 1, 6, 8, 11, 12, 14, 18) x 2
 
-
-def getMentalHealthSummary(rows, id):
+def get_mental_health_summary(rows, id):
     # foreach row:
     # timestamp as key :
     # calculate values
