@@ -1,92 +1,44 @@
+
 import React from 'react';
-import { Switch, Route, BrowserRouter, Redirect } from 'react-dom';
+import { Router, Switch, Link, Route, Redirect } from 'react-router-dom';
 import './App.scss';
 import MenuContainer from './components/MenuContainer';
-import Login from './Login';
+import Login from './LoginScreen';
 
 export default class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      loggedInStatus: "NOT_LOGGED_IN",
-      user: {},
-    };
-    this.handleLogin = this.handleLogin.bind(this);
-    this.handleLogout = this.handleLogout.bind(this);
+      loggedIn: false,
+    }
+    this.PrivateRoute = this.PrivateRoute.bind(this);
   }
-
-
 
   render() {
     return (
       <div className='App'>
-        <BrowserRouter>
-          <Switch>
-            <Route path="/login">
-              <Login />
-            </Route>
-            <PrivateRoute path="/protected">
-              <MenuContainer />
-            </PrivateRoute>
-          </Switch>
-        </BrowserRouter>
+        <div>
+          <p>Josh</p>
+        </div>
+        <Link to="/">Home</Link>{' '}
+        <Link to={{ pathname: '/login' }}>Login</Link>{' '}
+        <Switch>
+          <Route path="/login" component={Login} />
+          <PrivateRoute path="/" component={MenuContainer} />
+        </Switch>
       </div>
     );
   }
 }
 
-const fakeAuth = {
-  isAuthenticated: false,
-  authenticate(cb) {
-    fakeAuth.isAuthenticated = true;
-    setTimeout(cb, 100); // fake async
-  },
-  signout(cb) {
-    fakeAuth.isAuthenticated = false;
-    setTimeout(cb, 100);
-  }
-};function AuthButton() {
-  let history = useHistory();
+const PrivateRoute = ({ component, ...options }) => {
+  const finalComponent = this.state.loggedIn ? component : Login;
 
-  return fakeAuth.isAuthenticated ? (
-    <p>
-      Welcome!{" "}
-      <button
-        onClick={() => {
-          fakeAuth.signout(() => history.push("/"));
-        }}
-      >
-        Sign out
-      </button>
-    </p>
-  ) : (
-    <p>You are not logged in.</p>
-  );
+  return <Route {...options} component={finalComponent} />;
 }
 
 
 
-// A wrapper for <Route> that redirects to the login
-// screen if you're not yet authenticated.
-function PrivateRoute({ children, ...rest }) {
-  return (
-    <Route
-      {...rest}
-      render={({ location }) =>
-        fakeAuth.isAuthenticated ? (
-          children
-        ) : (
-            <Redirect
-              to={{
-                pathname: "/login",
-                state: { from: location }
-              }}
-            />
-          )
-      }
-    />
-  );
-}
 
 
 

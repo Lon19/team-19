@@ -1,22 +1,14 @@
 import React from 'react';
+import {Redirect} from 'react-dom';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import './Login.scss';
 
 export default function Login() {
-    let history = useHistory();
-    let location = useLocation();
-
-    let { from } = location.state || { from: { pathname: "/" } };
-    let login = () => {
-        fakeAuth.authenticate(() => {
-            history.replace(from);
-        });
-    };
-
+    
     return (
         <div className="Main">
-            <Form action={login}>
+            <Form>
                 <Form.Group>
                     <Form.Label>Username</Form.Label>
                     <Form.Control placeholder="Enter username" />
