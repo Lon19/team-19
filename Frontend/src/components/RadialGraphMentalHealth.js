@@ -4,6 +4,13 @@ import { VictoryBar } from 'victory';
 import { VictoryChart, VictoryTheme, VictoryLabel, VictoryPolarAxis, VictoryGroup, VictoryArea } from 'victory';
 
 const myBlue = "#75b2ff";
+var Titles;
+Titles = {
+    date : "Date",
+    depression: "Depression",
+    anxiety: "Anxiety",
+    stress: "Stress"
+}
 const characterData = [
     { Depression: 5, Anxiety: 2, Stress: 7 },
     { Depression: 4, Anxiety: 3, Stress: 4 },
@@ -16,43 +23,60 @@ class RadialGraphMentalHealth extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            data: this.processData(characterData),
-            maxima: {Depression: 36, Anxiety: 42, Stress: 42}
+            data: [],
+            withDateData: [],
+            maxima: { depression: 36,
+                stress: 42,
+                anxiety: 42},
+            ready: false
         };
+        this.processData.bind(this);
     }
 
-    getMaxima(data) {
-        const groupedData = Object.keys(data[0]).reduce((memo, key) => {
-            memo[key] = data.map((d) => d[key]);
-            return memo;
-        }, {});
-        return Object.keys(groupedData).reduce((memo, key) => {
-            memo[key] = Math.max(...groupedData[key]);
-            return memo;
-        }, {});
+    componentDidMount() {
+        //Other endpoint
+        fetch("http://127.0.0.1:5000/work-self-confidence/overview?username=67611589", {
+            mode: 'cors'
+        })
+            .then(response => {
+                    return response.json()
+                }
+            )
+            .then(data => {
+                console.log(data);
+                this.setState({data: this.processData(data.map(a => {
+                        delete a.date;
+                        return a;
+                    })), ready: true, withDateData: data });
+            });
     }
 
-    processData(data) {
-        const maxByGroup = this.getMaxima(data);
+    processData (data)  {
         const makeDataArray = (d) => {
             return Object.keys(d).map((key) => {
-                return { x: key, y: d[key] / maxByGroup[key] };
+                return { x: key, y: d[key] / this.state.maxima[key] };
             });
         };
         return data.map((datum) => makeDataArray(datum));
     }
 
     render() {
+        if (!this.state.ready) {
+            return null;
+        }
+
         return (
             <VictoryChart polar
                           theme={VictoryTheme.material}
                           domain={{ y: [ 0, 1 ] }}
+                          animate={{ duration: 500 }}
             >
                 <VictoryGroup colorScale={[myBlue]}
                               style={{ data: { fillOpacity: 0.8, strokeWidth: 0 } }}
                 >
                     {this.state.data.map((data, i) => {
-                        return <VictoryArea key={i} data={data}/>;
+                        if(i === 0)
+                            return <VictoryArea key={i} data={data}/>;
                     })}
                 </VictoryGroup>
                 {
@@ -68,7 +92,7 @@ class RadialGraphMentalHealth extends Component {
                                                   <VictoryLabel labelPlacement="vertical"/>
                                               }
                                               labelPlacement="vertical"
-                                              axisValue={i + 1} label={key}
+                                              axisValue={i + 1} label={Titles[key]}
                                               tickFormat={(t) => Math.ceil(t * this.state.maxima[key])}
                                               tickValues={[0.25, 0.5, 0.75]}
                             />
@@ -80,7 +104,7 @@ class RadialGraphMentalHealth extends Component {
                     tickFormat={() => ""}
                     style={{
                         axis: { stroke: "none" },
-                        grid: { stroke: "#75b2ff", opacity: 0.5 }
+                        grid: { stroke: myBlue, opacity: 1 }
                     }}
                 />
 

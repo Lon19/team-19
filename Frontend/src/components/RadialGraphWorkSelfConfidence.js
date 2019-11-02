@@ -1,11 +1,19 @@
 import React, { Component } from 'react'
-import ReactDOM from 'react-dom';
-import { VictoryBar } from 'victory';
 import { VictoryChart, VictoryTheme, VictoryLabel, VictoryPolarAxis, VictoryGroup, VictoryArea } from 'victory';
-import axios from 'axios';
-import {parseSync} from "@babel/core";
 
 const myBlue = "#75b2ff";
+
+var Titles;
+Titles = {
+    date : "Date",
+    learning: "Learning",
+    pressure: "Pressure",
+    problem_solving: "Problem Solving",
+    role_expectations: "Role Expectations",
+    sensitivity: "Sensitivity",
+    teamwork: "Teamwork",
+    work_politics: "Work Politics"
+}
 const characterData = [
     {
         "date": "18th August 2019 9:16 am",
@@ -25,12 +33,17 @@ class RadialGraphWorkSelfConfidence extends Component {
         this.state = {
             data: [],
             withDateData: [],
-            maxima: [],
+            maxima: { learning: 5,
+                pressure: 5,
+                problem_solving: 5,
+                role_expectations: 5,
+                sensitivity: 5,
+                teamwork: 5,
+                work_politics: 5},
             ready: false
         };
 
-this.processData.bind(this);
-this.getMaxima.bind(this);
+    this.processData.bind(this);
     }
 
     componentDidMount() {
@@ -49,23 +62,10 @@ this.getMaxima.bind(this);
                     })), ready: true, withDateData: data });
             });
     }
-
-    getMaxima(data) {
-        const groupedData = Object.keys(data[0]).reduce((memo, key) => {
-            memo[key] = data.map((d) => d[key]);
-            return memo;
-        }, {});
-        return Object.keys(groupedData).reduce((memo, key) => {
-            memo[key] = Math.max(...groupedData[key]);
-            return memo;
-        }, {});
-    }
-
      processData (data)  {
-        const maxByGroup = this.getMaxima(data);
         const makeDataArray = (d) => {
             return Object.keys(d).map((key) => {
-                return { x: key, y: d[key] / maxByGroup[key] };
+                return { x: key, y: d[key] / this.state.maxima[key] };
             });
         };
         return data.map((datum) => makeDataArray(datum));
@@ -80,12 +80,14 @@ this.getMaxima.bind(this);
             <VictoryChart polar
                           theme={VictoryTheme.material}
                           domain={{ y: [ 0, 1 ] }}
+                          animate={{ duration: 500 }}
             >
                 <VictoryGroup colorScale={[myBlue]}
                               style={{ data: { fillOpacity: 0.8, strokeWidth: 0 } }}
                 >
                     {this.state.data.map((data, i) => {
-                        return <VictoryArea key={i} data={data}/>;
+                        if(i === 0)
+                            return <VictoryArea key={i} data={data}/>;
                     })}
                 </VictoryGroup>
                 {
@@ -101,7 +103,7 @@ this.getMaxima.bind(this);
                                                   <VictoryLabel labelPlacement="vertical"/>
                                               }
                                               labelPlacement="vertical"
-                                              axisValue={i + 1} label={key}
+                                              axisValue={i + 1} label={Titles[key]}
                                               tickFormat={(t) => Math.ceil(t * this.state.maxima[key])}
                                               tickValues={[0.25, 0.5, 0.75]}
                             />
@@ -113,7 +115,7 @@ this.getMaxima.bind(this);
                     tickFormat={() => ""}
                     style={{
                         axis: { stroke: "none" },
-                        grid: { stroke: "#75b2ff", opacity: 0.5 }
+                        grid: { stroke: myBlue, opacity: 1 }
                     }}
                 />
 
