@@ -81,23 +81,37 @@ mental_health_questions = {
     21: "I felt that life was meaningless",
 }
 
+
+def fix_broken_data(x):
+   return int(x) if x else 0
+
+
 # Depression = (sum of questions 3, 5, 10, 16, 17, 21) x 2
 # Anxiety = (sum of questions 2, 4, 7, 9, 15, 19, 20) x 2
 # Stress = (sum of questions 1, 6, 8, 11, 12, 14, 18) x 2
 
 
-def getMentalHealthSummary(rows, id):
+def get_mental_health_summary(rows, id):
     # foreach row:
     # timestamp as key :
     # calculate values
-
+    summary = []
     for row in rows:
         if row[2] == id:
-            depression = ((int(row[3]) + int(row[5]) + int(row[10]) +
-                           int(row[16]) + int(row[17]) + int(row[21])) * 2)
-            return depression
-        #print("" + str(key) + " : " + str(depression))
-    return 0
+            d = dict()
+            d["date"] = row[25]
+            d["depression"] = ((fix_broken_data(row[5]) + fix_broken_data(row[7]) + fix_broken_data(row[12]) +
+                           fix_broken_data(row[18]) + fix_broken_data(row[19]) + fix_broken_data(row[23])) * 2)
+
+            d["anxiety"] = ((fix_broken_data(row[4]) + fix_broken_data(row[6]) + fix_broken_data(row[9]) +
+                           fix_broken_data(row[11]) + fix_broken_data(row[17]) + fix_broken_data(row[21]) +
+                             fix_broken_data(row[22])) * 2)
+
+            d["stress"] = ((fix_broken_data(row[3]) + fix_broken_data(row[8]) + fix_broken_data(row[10]) +
+                           fix_broken_data(row[13]) + fix_broken_data(row[14]) + fix_broken_data(row[16]) +
+                             fix_broken_data(row[20])) * 2)
+            summary.append(d)
+    return summary
 
 
 def get_work_self_confidence_summary(rows, id):
@@ -105,13 +119,13 @@ def get_work_self_confidence_summary(rows, id):
 
     for row in rows:
         if row[2] == id:
-            learning = (int(row[7]) + int(row[15]) + int(row[25]) + int(row[28]))/4
-            problem_solving = (int(row[12]) + int(row[17]) + int(row[18]) + int(row[19]) + int(row[24]) + int(row[26]))/6
-            pressure = (int(row[8]) + int(row[13]) + int(row[22]) + int(row[30]))/4
-            role_expectations = (int(row[3]) + int(row[5]) + int(row[11]) + int(row[23]))/4
-            teamwork = (int(row[4]) + int(row[10]) + int(row[16]) + int(row[27]))/4
-            sensitivity = (int(row[10]) + int(row[29]) + int(row[31]) + int(row[32]))/4
-            work_politics = (int(row[6]) + int(row[9]) + int(row[14]) + int(row[21]))/4
+            learning = (fix_broken_data(row[7]) + fix_broken_data(row[15]) + fix_broken_data(row[25]) + fix_broken_data(row[28]))/4
+            problem_solving = (fix_broken_data(row[12]) + fix_broken_data(row[17]) + fix_broken_data(row[18]) + fix_broken_data(row[19]) + fix_broken_data(row[24]) + fix_broken_data(row[26]))/6
+            pressure = (fix_broken_data(row[8]) + fix_broken_data(row[13]) + fix_broken_data(row[22]) + fix_broken_data(row[30]))/4
+            role_expectations = (fix_broken_data(row[3]) + fix_broken_data(row[5]) + fix_broken_data(row[11]) + fix_broken_data(row[23]))/4
+            teamwork = (fix_broken_data(row[4]) + fix_broken_data(row[10]) + fix_broken_data(row[16]) + fix_broken_data(row[27]))/4
+            sensitivity = (fix_broken_data(row[10]) + fix_broken_data(row[29]) + fix_broken_data(row[31]) + fix_broken_data(row[32]))/4
+            work_politics = (fix_broken_data(row[6]) + fix_broken_data(row[9]) + fix_broken_data(row[14]) + fix_broken_data(row[21]))/4
 
             summary.append({
                 "date": row[34],

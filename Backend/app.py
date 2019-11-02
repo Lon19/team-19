@@ -32,9 +32,10 @@ def get_mental_health_count():
 @app.route('/mental-health/overview', methods=['GET'])
 def get_mental_health_overview():
     username = request.args.get('username')
-    depression = f.getMentalHealthSummary(
+    depression = f.get_mental_health_summary(
         app.mental_health_df_quantitative, username)
     return jsonify(depression)
+
 
 @app.route('/work-self-confidence/overview', methods=['GET'])
 def get_work_self_confidence_overview():
