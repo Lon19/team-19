@@ -1,15 +1,16 @@
-@import url('https://fonts.googleapis.com/css?family=Rubik:300');
+@import url('https://fonts.googleapis.com/css?family=Lato&display=swap');
 $bg: #34495e;
-$primarycolor: #FE6B64;
+$primarycolor: #FF8384;
 $white: #ecf0f1;
 $font: 'Rubik';
 
 html, body {
   background: white;
   min-height: 100vh;
-  font-family: $font, sans-serif;
-  padding: 100px;
-  margin: 100px;
+  font-family: 'Lato', sans-serif;
+  font-weight: bolder;
+  padding: 0px;
+  margin: 0px;
 }
 
 .App {
@@ -40,17 +41,19 @@ html, body {
 }
 
 .menu-container {
-  box-shadow: 0 0px 50px hsla(0, 0, 0, 0.7);
+  box-shadow: 0 0px 50px hsla(0, 0, 0, 0);
   position: relative;
   transform: translate(0);
-  margin: 18% auto 18% auto;
-  width: 90%;
+  //***  margin: 18% auto 18% auto;
+  margin: auto auto auto auto;
+  width: 95%;
   height: 100%;
 }
 
 .menu-item,
 .menu-item--active {
-  height: 70px;
+  display: flex;
+  height: (100vh)/3;
   width: 100%;
 }
 
@@ -59,9 +62,9 @@ html, body {
   color: $white;
   cursor: pointer;
   display: flex;
-  font-size: 15px;
+  font-size: 30px;
   justify-content: center;
-  letter-spacing: 4px;
+  letter-spacing: 3px;
   text-align: center;
 
   &.active {
@@ -75,13 +78,13 @@ html, body {
     background: darken($primarycolor, 5%);
   }
   &:nth-of-type(3) {
-    background: darken($primarycolor, 10%);
-  }
-  &:nth-of-type(4) {
     background: darken($primarycolor, 15%);
   }
+  &:nth-of-type(4) {
+    background: darken($primarycolor, 25%);
+  }
   &:nth-of-type(5) {
-    background: darken($primarycolor, 20%);
+    background: darken($primarycolor, 35%);
   }
 }
 
