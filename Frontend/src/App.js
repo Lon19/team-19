@@ -4,6 +4,11 @@ import { Router, Switch, Link, Route, Redirect } from 'react-router-dom';
 import './App.scss';
 import MenuContainer from './components/MenuContainer';
 import Login from './LoginScreen';
+import RadialGraphMentalHealth from "./components/RadialGraphMentalHealth";
+import RadialGraphWorkSelfConfidence from "./components/RadialGraphWorkSelfConfidence";
+import LinearGraph from "./components/LinearGraph";
+
+
 
 export default class App extends React.Component {
   constructor(props) {
@@ -26,6 +31,10 @@ export default class App extends React.Component {
           <Route path="/login" component={Login} />
           <PrivateRoute path="/" component={MenuContainer} />
         </Switch>
+        <MenuContainer />
+        {/*<RadialGraphMentalHealth/>*/}
+        <RadialGraphWorkSelfConfidence/>
+        <LinearGraph/>
       </div>
     );
   }

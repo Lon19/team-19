@@ -1,11 +1,12 @@
 @import url('https://fonts.googleapis.com/css?family=Rubik:300');
-$bg: #34495e;
+$bg: #fffdeb;
 $primarycolor: #f39c12;
 $white: #ecf0f1;
 $font: 'Rubik';
 
 html, body {
-  background: radial-gradient($bg 0, darken($bg, 15%) 100%);
+  //background: radial-gradient($bg 0, darken($bg, 15%) 100%);
+  background: $bg;
   min-height: 100vh;
   font-family: $font, sans-serif;
   padding: 0;
@@ -40,7 +41,7 @@ html, body {
 }
 
 .menu-container {
-  box-shadow: 0 0px 50px hsla(0, 0, 0, 0.7);
+  //box-shadow: 0 0px 50px hsla(0, 0, 0, 0.7);
   position: relative;
   transform: translate(0);
   margin: 18% auto 18% auto;
@@ -65,7 +66,7 @@ html, body {
   text-align: center;
   
   &.active {
-    box-shadow: 0 2px 3px hsla(0, 0, 0, 0.7);
+    //box-shadow: 0 2px 3px hsla(0, 0, 0, 0.7);
   }
  
   &:nth-of-type(1) {
@@ -88,7 +89,7 @@ html, body {
 .menu-item--active {
   background: $primarycolor;
   border-radius: 2px !important;
-  box-shadow: 0 0px 50px hsla(0, 0, 0, 0.5);
+  //box-shadow: 0 0px 50px hsla(0, 0, 0, 0.5);
   left: 50%;
   padding: 0 7px;
   position: absolute;
