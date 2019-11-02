@@ -16,7 +16,12 @@ export default class App extends React.Component {
     this.state = {
       loggedIn: false,
     }
-    this.PrivateRoute = this.PrivateRoute.bind(this);
+  }
+
+  logIn(){
+    this.setState({
+      loggedIn: true,
+    });
   }
 
   render() {
@@ -28,8 +33,8 @@ export default class App extends React.Component {
         <Link to="/">Home</Link>{' '}
         <Link to={{ pathname: '/login' }}>Login</Link>{' '}
         <Switch>
-          <Route path="/login" component={Login} />
-          <PrivateRoute path="/" component={MenuContainer} />
+          <Route path="/login" component={Login} login={this.logIn} />
+          <PrivateRoute path="/" component={MenuContainer} state={this.state.loggedIn} />
         </Switch>
         <MenuContainer />
         {/*<RadialGraphMentalHealth/>*/}
@@ -40,8 +45,8 @@ export default class App extends React.Component {
   }
 }
 
-const PrivateRoute = ({ component, ...options }) => {
-  const finalComponent = this.state.loggedIn ? component : Login;
+const PrivateRoute = ({ component, ...options, state }) => {
+  const finalComponent = state ? component : Login;
 
   return <Route {...options} component={finalComponent} />;
 }
