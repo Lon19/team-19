@@ -1,5 +1,7 @@
 import csv
 from textblob import TextBlob
+from datetime import datetime, timedelta
+
 
 def dataframe_from_csv(raw_data_file):
     infile = open(raw_data_file, 'r')
@@ -85,7 +87,7 @@ mental_health_questions = {
 def get_adjustments_sentiments_summary(rows, id):
     summary = []
     headers = rows[0]
-    for row in rows:
+    for row in rows[1:]:
         if row[headers.index('Username')] == id:
             timestamp = row[headers.index('Date')]
             questions = []
@@ -126,14 +128,12 @@ def fix_broken_data(x):
 
 
 def get_mental_health_summary(rows, id):
-    # foreach row:
-    # timestamp as key :
-    # calculate values
     summary = []
-    for row in rows:
-        if row[2] == id:
+    headers = rows[0]
+    for row in rows[1:]:
+        if row[headers.index('Username')] == id:
             d = dict()
-            d["date"] = row[25]
+            d['date'] = row[headers.index('Date')].replace('th ',' ').replace('st ',' ').replace('nd ',' ').replace('Augu','August')
             depression = ((fix_broken_data(row[5]) + fix_broken_data(row[7]) + fix_broken_data(row[12]) +
                            fix_broken_data(row[18]) + fix_broken_data(row[19]) + fix_broken_data(row[23])) * 2)
 
@@ -153,6 +153,15 @@ def get_mental_health_summary(rows, id):
             summary.append(d)
     return summary
 
+# Severity ratings
+# Severity  Depression  Anxiety   Stress
+# --------|-----------|----------|---------|
+# Normal    0-9         0-7       0-14
+# Mild      10-13       8-9       15-18
+# Moderate  14-20       10-14     19-25
+# Severity  21-27       15-19     26-33
+# Extremely 28+         20+       34+
+# ...Severe
 
 def get_severity(attribute, value):
     if (value < 0):
@@ -194,9 +203,9 @@ def get_severity(attribute, value):
 
 def get_work_self_confidence_summary(rows, id):
     summary = []
-
-    for row in rows:
-        if row[2] == id:
+    headers = rows[0]
+    for row in rows[1:]:
+        if row[headers.index('Username')] == id:
             learning = (fix_broken_data(row[7]) + fix_broken_data(row[15]) + fix_broken_data(row[25]) + fix_broken_data(row[28]))/4
             problem_solving = (fix_broken_data(row[12]) + fix_broken_data(row[17]) + fix_broken_data(row[18]) + fix_broken_data(row[19]) + fix_broken_data(row[24]) + fix_broken_data(row[26]))/6
             pressure = (fix_broken_data(row[8]) + fix_broken_data(row[13]) + fix_broken_data(row[22]) + fix_broken_data(row[30]))/4
@@ -206,7 +215,7 @@ def get_work_self_confidence_summary(rows, id):
             work_politics = (fix_broken_data(row[6]) + fix_broken_data(row[9]) + fix_broken_data(row[14]) + fix_broken_data(row[21]))/4
 
             summary.append({
-                "date": row[34],
+                "date": row[headers.index('Date')].replace('th ',' ').replace('st ',' ').replace('nd ',' ').replace('Augu','August'),
                 "learning": learning,
                 "problem_solving": problem_solving,
                 "pressure": pressure,
@@ -219,12 +228,48 @@ def get_work_self_confidence_summary(rows, id):
     return summary
 
 
-# Severity ratings
-# Severity  Depression  Anxiety   Stress
-# --------|-----------|----------|---------|
-# Normal    0-9         0-7       0-14
-# Mild      10-13       8-9       15-18
-# Moderate  14-20       10-14     19-25
-# Severity  21-27       15-19     26-33
-# Extremely 28+         20+       34+
-# ...Severe
+# admin overviews
+
+
+def get_admin_mental_health_summary(rows):
+    # for each week, get max, min, avg
+    # date format: 29th October 2019 11:54 am
+    weeks = {}
+
+    for row in rows[1:]:
+        d = dict()
+
+        # get week start for grouping
+        date = row[25].replace('th ',' ').replace('st ',' ').replace('nd ',' ').replace('Augu','August')
+        dt = datetime.strptime(date, '%d %B %Y %I:%M %p')
+        week_start = dt - timedelta(days=dt.weekday())
+        date = week_start.strftime('%d %B %Y %I:%M %p')
+
+        d["date"] = date
+
+        depression = ((fix_broken_data(row[5]) + fix_broken_data(row[7]) + fix_broken_data(row[12]) +
+                        fix_broken_data(row[18]) + fix_broken_data(row[19]) + fix_broken_data(row[23])) * 2)
+
+        anxiety = ((fix_broken_data(row[4]) + fix_broken_data(row[6]) + fix_broken_data(row[9]) +
+                        fix_broken_data(row[11]) + fix_broken_data(row[17]) + fix_broken_data(row[21]) +
+                            fix_broken_data(row[22])) * 2)
+
+        stress  = ((fix_broken_data(row[3]) + fix_broken_data(row[8]) + fix_broken_data(row[10]) +
+                        fix_broken_data(row[13]) + fix_broken_data(row[14]) + fix_broken_data(row[16]) +
+                            fix_broken_data(row[20])) * 2)
+
+        d["depression"] = depression
+        d["anxiety"]    = anxiety
+        d["stress"]     = stress
+        d["depression_severity"] = get_severity('depression',depression)
+        d["anxiety_severity"]    = get_severity('anxiety'   ,anxiety)
+        d["stress_severity"]     = get_severity('stress'    ,stress)
+
+
+        if date in weeks:
+            weeks[date].append(d)
+        else:
+            weeks[date] = [d]
+
+    # TODO : calculate avgs from all data
+    return [weeks]
