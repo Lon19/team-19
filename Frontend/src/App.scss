@@ -11,12 +11,16 @@ html, body {
   font-weight: bolder;
   padding: 0px;
   margin: 0px;
+  text-align: center;
+  justify-content: center;
 }
 
 .App {
   //Change if more items added
   background: $white;
   display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .description {

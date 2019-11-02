@@ -1,30 +1,34 @@
-import React from 'react';
-import { Router, Switch, Link, Route, Redirect } from 'react-router-dom';
-import './App.scss';
-import MenuContainer from './components/MenuContainer';
-import Login from './LoginScreen';
+import React from "react";
+import { Router, Switch, Link, Route, Redirect } from "react-router-dom";
+import "./App.scss";
+import MenuContainer from "./components/MenuContainer";
+import Login from "./LoginScreen";
 
 export default class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      loggedIn: false,
+      loggedIn: false
     };
   }
 
   logIn = () => {
     this.setState({
-      loggedIn: true,
-    }); 
-  }
+      loggedIn: true
+    });
+  };
 
   render() {
     return (
-      <div className='App'>
+      <div className="App">
         <Switch>
-          <PrivateRoute path="/" component={MenuContainer} state={this.state.loggedIn} logIn={this.logIn} />
+          <PrivateRoute
+            path="/"
+            component={MenuContainer}
+            state={this.state.loggedIn}
+            logIn={this.logIn}
+          />
         </Switch>
-
       </div>
     );
   }
@@ -33,5 +37,5 @@ export default class App extends React.Component {
 const PrivateRoute = ({ component, logIn, state, ...options }) => {
   const FinalComponent = state ? component : Login;
 
-  return <Route {...options} render={(props) => <FinalComponent logIn={logIn}/>} />;
+  return (<Route {...options} render={(props) => <FinalComponent logIn={logIn}/>} />);
 }
