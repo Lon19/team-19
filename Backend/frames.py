@@ -31,12 +31,12 @@ def work_self_confidence_dataframe():
 
 class AnswerMappings:
     mental_health = {
-        'did not apply to me at all': 0,
-        'applied to me to some degree': 1,
-        'applied to me to a considerable degree, or a good part of the time': 2,
-        'applied to me a good part of the time': 2,
-        'applied to me to a considerable degree': 2,
-        'applied to me very much, or most of the time': 3,
+        'Did not apply to me at all': 0,
+        'Applied to me to some degree': 1,
+        'Applied to me to a considerable degree, or a good part of the time': 2,
+        'Applied to me a good part of the time': 2,
+        'Applied to me to a considerable degree': 2,
+        'Applied to me very much, or most of the time': 3,
     }
 
     organisational_culture = {
@@ -55,22 +55,47 @@ class AnswerMappings:
     }
 
 
+mental_health_questions = {
+    1: "I found it hard to wind down",
+    2: "I was aware of dryness of my mouth",
+    3: "I couldn't seem to experience any postive feelings at all",
+    4: "I experienced breathing difficulty (e.g. excessively rapid breathing, breathlessness in the absence of physical exertion)",
+    5: "I found it difficult to work up the initiative to do things",
+    6: "I tended to over-react to situations",
+    7: "I experienced trembling (e.g. in the hands)",
+    8: "I felt that I was using a lot of nervous energy",
+    9: "I was worried about situations in which I might panic and make a fool of myself",
+    10: "I felt that I had nothing to look forward to",
+    11: "I found myself getting agitated",
+    12: "I found it difficult to relax",
+    13: "I felt down-hearted and blue",
+    14: "I was intolerant of anything that kept me from getting on with what I was doing",
+    15: "I felt I was close to panic",
+    16: "I was unable to become enthusiastic about anything",
+    17: "I felt I wasn't worth much as a person",
+    18: "I felt that I was rather touchy",
+    19: "I was aware of the actions of my heart in the absence of physical exertion (e.g. sense of heart rate increase, heart missing a beat)",
+    20: "I felt scared without any good reason",
+    21: "I felt that life was meaningless",
+}
+
+# Depression = (sum of questions 3, 5, 10, 16, 17, 21) x 2
+# Anxiety = (sum of questions 2, 4, 7, 9, 15, 19, 20) x 2
+# Stress = (sum of questions 1, 6, 8, 11, 12, 14, 18) x 2
 
 
-
-class MentalHealth:
-    # Depression = (sum of questions 3, 5, 10, 16, 17, 21) x 2
-    def CalculateDepression(self, row):
-        # convert to lowercase for finding score
-        return 0
-
-    # Anxiety = (sum of questions 2, 4, 7, 9, 15, 19, 20) x 2
-    def CalculateAnxiety(self, row):
-        return 0
-
-    # Stress = (sum of questions 1, 6, 8, 11, 12, 14, 18) x 2
-    def CalculateStress(self, row):
-        return 0
+def getMentalHealthSummary(df, id):
+    rows = df.loc[df['Username'] == id]
+    # foreach row:
+    # timestamp as key :
+    # calculate values
+    for index, row in rows.iterrows():
+        key = row['Date']
+        print(row[mental_health_questions[3]])
+        # depression = ((row[mental_health_questions[3]] + row[mental_health_questions[5]] + row[mental_health_questions[10]] +
+        #               row[mental_health_questions[16]] + row[mental_health_questions[17]] + row[mental_health_questions[21]]) * 2)
+        #print("" + str(key) + " : " + str(depression))
+    return 0
 
 # Severity ratings
 # Severity  Depression  Anxiety   Stress

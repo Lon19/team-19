@@ -1,6 +1,6 @@
 #!flask/bin/python
 import frames as f
-from flask import Flask, jsonify
+from flask import Flask, jsonify, request
 
 app = Flask(__name__)
 
@@ -27,6 +27,15 @@ def get_adjustments_count():
 @app.route('/mental-health/count', methods=['GET'])
 def get_mental_health_count():
     return jsonify(len(app.frames["mental_health_df"]))
+
+
+@app.route('/mental-health/overview', methods=['GET'])
+def get_mental_health_overview():
+    username = request.args.get('username')
+    username = 22222222
+    depression = f.getMentalHealthSummary(
+        app.mental_health_df_quantitative, username)
+    return jsonify(depression)
 
 
 @app.route('/organisational-culture/count', methods=['GET'])
