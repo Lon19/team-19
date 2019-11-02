@@ -9,14 +9,14 @@ app.frames = {"adjustments_df": f.adjustments_dataframe(),
               "organisational_culture_df": f.organisational_culture_dataframe(),
               "work_self_confidence_df": f.work_self_confidence_dataframe()}
 
-app.organisational_culture_df_quantitative = app.frames["organisational_culture_df"].applymap(
-    lambda data: f.AnswerMappings.organisational_culture[data] if data in f.AnswerMappings.organisational_culture else data)
+app.organisational_culture_df_quantitative = list(map(lambda row: list(map(
+    lambda data: f.AnswerMappings.organisational_culture[data] if data in f.AnswerMappings.organisational_culture else data, row)), app.frames["organisational_culture_df"]))
 
-app.mental_health_df_quantitative = app.frames["mental_health_df"].applymap(
-    lambda data: f.AnswerMappings.mental_health[str(data).lower()] if str(data).lower() in f.AnswerMappings.mental_health else data)
+app.mental_health_df_quantitative = list(map(lambda row: list(map(
+    lambda data: f.AnswerMappings.mental_health[data] if data in f.AnswerMappings.mental_health else data,row)), app.frames["mental_health_df"]))
 
-app.work_self_confidence_df_quantitative = app.frames["organisational_culture_df"].applymap(
-    lambda data: f.AnswerMappings.work_self_confidence[data] if data in f.AnswerMappings.work_self_confidence else data)
+app.work_self_confidence_df_quantitative = list(map(lambda row: list(map(
+    lambda data: f.AnswerMappings.work_self_confidence[data] if data in f.AnswerMappings.work_self_confidence else data, row)), app.frames["work_self_confidence_df"]))
 
 
 @app.route('/adjustments/count', methods=['GET'])
@@ -32,7 +32,6 @@ def get_mental_health_count():
 @app.route('/mental-health/overview', methods=['GET'])
 def get_mental_health_overview():
     username = request.args.get('username')
-    username = 22222222
     depression = f.getMentalHealthSummary(
         app.mental_health_df_quantitative, username)
     return jsonify(depression)

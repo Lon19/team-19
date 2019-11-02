@@ -1,12 +1,13 @@
-import pandas as pd
-
+import csv
 
 def dataframe_from_csv(raw_data_file):
-    infile = open(raw_data_file, 'rb')
-    mental_health_dict = pd.read_csv(infile)
+    infile = open(raw_data_file, 'r')
+    reader = csv.reader(infile)
+    a = []
+    for row in reader:
+        a.append(row)
     infile.close()
-    df = pd.DataFrame(data=mental_health_dict)
-    return df
+    return a
 
 
 def mental_health_dataframe():
@@ -35,8 +36,9 @@ class AnswerMappings:
         'Applied to me to some degree': 1,
         'Applied to me to a considerable degree, or a good part of the time': 2,
         'Applied to me a good part of the time': 2,
-        'Applied to me to a considerable degree': 2,
+        'Applied to me to a considerable degree': 2,
         'Applied to me very much, or most of the time': 3,
+        'Applied to me very much': 3,
     }
 
     organisational_culture = {
@@ -84,16 +86,16 @@ mental_health_questions = {
 # Stress = (sum of questions 1, 6, 8, 11, 12, 14, 18) x 2
 
 
-def getMentalHealthSummary(df, id):
-    rows = df.loc[df['Username'] == id]
+def getMentalHealthSummary(rows, id):
     # foreach row:
     # timestamp as key :
     # calculate values
-    for index, row in rows.iterrows():
-        key = row['Date']
-        print(row[mental_health_questions[3]])
-        # depression = ((row[mental_health_questions[3]] + row[mental_health_questions[5]] + row[mental_health_questions[10]] +
-        #               row[mental_health_questions[16]] + row[mental_health_questions[17]] + row[mental_health_questions[21]]) * 2)
+
+    for row in rows:
+        if row[2] == id:
+            depression = ((int(row[3]) + int(row[5]) + int(row[10]) +
+                           int(row[16]) + int(row[17]) + int(row[21])) * 2)
+            return depression
         #print("" + str(key) + " : " + str(depression))
     return 0
 
