@@ -1,5 +1,4 @@
 import React from 'react';
-import { Redirect } from 'react-dom';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import './Login.scss';
@@ -12,7 +11,7 @@ export default class Login extends React.Component {
     render() {
         return (
             <div className="Main">
-                <Form action={() => this.props.logIn()}>
+                <Form onSubmit={() => this.props.logIn()}>
                     <Form.Group>
                         <Form.Label>Username</Form.Label>
                         <Form.Control placeholder="Enter username" />
