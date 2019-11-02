@@ -1,9 +1,11 @@
 import React from 'react';
+import Popup from '../Popup';
 
 export default class MenuContainer extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
+      showPopup: false,
       activeItem: '',
       activeItemPosition: 0,
       activeItemColor: '',
@@ -14,10 +16,17 @@ export default class MenuContainer extends React.Component {
         { text: 'Self-confidence' },
       ],
     }
-    this.handleClick = this.handleClick.bind(this);
+    this.handleMouseOver = this.handleMouseOver.bind(this);
+    this.togglePopup = this.togglePopup.bind(this);
   }
 
-  handleClick(activeItem) {
+  togglePopup() {
+    this.setState({
+      showPopup: !this.state.showPopup,
+    });
+  }
+
+  handleMouseOver(activeItem) {
     return e => {
       e.preventDefault();
       this.setState({
@@ -29,12 +38,19 @@ export default class MenuContainer extends React.Component {
   }
 
   render() {
-    const menuItems = this.state.menuItems.map(item => <MenuItem item={item} handleClick={this.handleClick} />)
+    const menuItems = this.state.menuItems.map(item => <MenuItem item={item} handleMouseOver={this.handleMouseOver} togglePopup={this.togglePopup}/>)
     return (
-      <div className='menu-container'>
-        <span className='menu-item--active' style={{ top: this.state.activeItemPosition, backgroundColor: this.state.activeItemColor }} />
-        {menuItems}
-      </div>
+        <div className='menu-container'>
+          <span className='menu-item--active' style={{ top: this.state.activeItemPosition, backgroundColor: this.state.activeItemColor }} />
+          {menuItems}
+          {this.state.showPopup ?
+              <Popup
+                  text='Close Me'
+                  closePopup={this.togglePopup}
+              />
+              : null
+          }
+        </div>
     );
   }
 }
@@ -42,12 +58,13 @@ export default class MenuContainer extends React.Component {
 //Menu item component
 function MenuItem(props) {
   return (
-    <div
-      className='menu-item'
-      id={props.item.text}
-      onMouseOver={props.handleClick(props.item.text)}
-    >
-      {props.item.text.toUpperCase()}
-    </div>
+      <div
+          className='menu-item'
+          id={props.item.text}
+          onMouseOver={props.handleMouseOver(props.item.text)}
+          onClick={props.togglePopup}
+      >
+        {props.item.text.toUpperCase()}
+      </div>
   );
 }
