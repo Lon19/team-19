@@ -1,3 +1,5 @@
+/**/node_modules/
+
 # VSCode
 .vscode/*
 !.vscode/settings.json
@@ -76,3 +78,9 @@ Sessionx.vim
 tags
 # Persistent undo
 [._]*.un~
+
+/Backend/__pycache__
+
+.idea
+package-lock.json
+/**/package-lock.json
